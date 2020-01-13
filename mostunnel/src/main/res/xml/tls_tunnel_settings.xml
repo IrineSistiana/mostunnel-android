@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.preference.PreferenceCategory app:title="Settings">
+        <androidx.preference.EditTextPreference
+            app:key="serverName"
+            app:persistent="false"
+            app:title="ServerName"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="Used to verify the host name. It is also included in the client's TLS and WSS handshake to support virtual hosting unless it is an IP address." />
+
+        <androidx.preference.CheckBoxPreference
+            app:key="wssMode"
+            app:persistent="false"
+            app:summary="Enable wss protocol"
+            app:title="WebSocket Secure" />
+        <androidx.preference.EditTextPreference
+            app:key="path"
+            app:persistent="false"
+            app:title="WebSocket Path"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="Note: WebSocket settings should be consistent with server's settings" />
+        <androidx.preference.CheckBoxPreference
+            app:key="insecureSkipVerify"
+            app:persistent="false"
+            app:summary="Client won't verify the server's certificate chain and host name. In this mode, your connections are susceptible to man-in-the-middle attacks. Use it with caution."
+            app:title="Skip Verify" />
+        <androidx.preference.CheckBoxPreference
+            app:key="mux"
+            app:persistent="false"
+            app:title="Enable mux"
+            app:summary="Stream-oriented multiplexing over a single channel"/>
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory app:title="Geek's settings">
+        <androidx.preference.EditTextPreference
+            app:key="buffSize"
+            app:persistent="false"
+            app:title="IO buffer size (KB)"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="Size of io buffer for each connection. It's also the max size of WebSocket frames. For best performance, keep this value consistent the server's . (default: 512)" />
+
+        <androidx.preference.CheckBoxPreference
+            app:key="noDelay"
+            app:persistent="false"
+            app:title="Enable TCP no delay"
+            app:summary="TCP_NODELAY"/>
+
+        <androidx.preference.EditTextPreference
+            app:key="mss"
+            app:persistent="false"
+            app:title="TCP maximum segment size"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="The maximum segment size for outgoing TCP packets: TCP_MAXSEG, linux only" />
+
+
+
+        <androidx.preference.EditTextPreference
+            app:key="idleTimeout"
+            app:persistent="false"
+            app:title="Idle Timeout"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="(default: 5m0s)" />
+
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory app:title="Debug only">
+        <androidx.preference.EditTextPreference
+            app:key="fallbackDNS"
+            app:persistent="false"
+            app:title="Fallback DNS server"
+            app:useSimpleSummaryProvider="true" />
+        <androidx.preference.Preference app:summary="A dns server that used to resolve host name, must be an IP address. If your server is a host name and you can't connect to your server, you may need to set this value to avoid a dns lookup dead loop." />
+
+        <androidx.preference.CheckBoxPreference
+            app:key="verbose"
+            app:persistent="false"
+            app:title="Verbose"
+            app:summary="more log"/>
+        <androidx.preference.Preference
+            app:key="receivedStr"
+            app:summary="" />
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
