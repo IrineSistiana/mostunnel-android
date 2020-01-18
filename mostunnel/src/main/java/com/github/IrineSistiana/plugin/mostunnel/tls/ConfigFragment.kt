@@ -38,6 +38,7 @@ class ConfigFragment : GeneralConfigFragment() {
     private val path by lazy { findPreference<EditTextPreference>("path")!! }
     private val insecureSkipVerify by lazy { findPreference<CheckBoxPreference>("insecureSkipVerify")!! }
     private val mux by lazy { findPreference<CheckBoxPreference>("mux")!! }
+    private val maxStream by lazy { findPreference<EditTextPreference>("maxStream")!! }
 
     //geek's
     private val buffSize by lazy { findPreference<EditTextPreference>("buffSize")!! }
@@ -61,6 +62,7 @@ class ConfigFragment : GeneralConfigFragment() {
             if (path.text.isNotBlank()) this["path"] = path.text
             if (insecureSkipVerify.isChecked) this["sv"] = null
             if (mux.isChecked) this["mux"] = null
+            if (maxStream.text.isNotBlank()) this["max-stream"] = maxStream.text
 
             if (buffSize.text.isNotBlank()) this["buff"] = buffSize.text
             if (noDelay.isChecked) this["no-delay"] = null
@@ -80,6 +82,8 @@ class ConfigFragment : GeneralConfigFragment() {
         path.text = options["path"] ?: ""
         insecureSkipVerify.isChecked = options.containsKey("sv")
         mux.isChecked = options.containsKey("mux")
+        maxStream.isEnabled = mux.isChecked
+        maxStream.text = options["max-stream"] ?: ""
 
         buffSize.text = options["buff"] ?: ""
         noDelay.isChecked = options.containsKey("no-delay")
@@ -101,6 +105,11 @@ class ConfigFragment : GeneralConfigFragment() {
         }
 
         path.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
+        mux.setOnPreferenceChangeListener { _, newValue ->
+            maxStream.isEnabled = newValue as Boolean
+            return@setOnPreferenceChangeListener true
+        }
+        maxStream.setOnBindEditTextListener { it.inputType = InputType.TYPE_CLASS_NUMBER }
 
         buffSize.setOnBindEditTextListener { it.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL }
         idleTimeout.setOnBindEditTextListener { it.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL }

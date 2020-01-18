@@ -29,6 +29,11 @@
             app:persistent="false"
             app:title="Enable mux"
             app:summary="Stream-oriented multiplexing over a single channel"/>
+        <androidx.preference.EditTextPreference
+            app:key="maxStream"
+            app:persistent="false"
+            app:title="Max number of multiplexed streams"
+            app:useSimpleSummaryProvider="true" />
 
     </androidx.preference.PreferenceCategory>
 
