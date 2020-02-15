@@ -2,24 +2,24 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.preference.PreferenceCategory app:title="Settings">
         <androidx.preference.EditTextPreference
-            app:key="serverName"
+            app:key="n"
             app:persistent="false"
-            app:title="ServerName (sv)"
+            app:title="ServerName (n)"
             app:useSimpleSummaryProvider="true" />
 
         <androidx.preference.CheckBoxPreference
-            app:key="wssMode"
+            app:key="wss"
             app:persistent="false"
             app:summary="wss"
             app:title="Enable WebSocket Protocol" />
         <androidx.preference.EditTextPreference
-            app:key="path"
+            app:key="wss-path"
             app:persistent="false"
-            app:title="WebSocket Path (path)"
+            app:title="WebSocket Path (wss-path)"
             app:useSimpleSummaryProvider="true" />
 
         <androidx.preference.CheckBoxPreference
-            app:key="insecureSkipVerify"
+            app:key="sv"
             app:persistent="false"
             app:summary="sv"
             app:title="Skip Verify" />
@@ -29,33 +29,15 @@
             app:title="Enable mux"
             app:summary="mux"/>
         <androidx.preference.EditTextPreference
-            app:key="maxStream"
+            app:key="mux-max-stream"
             app:persistent="false"
-            app:title="Max number of multiplexed streams (max-stream)"
+            app:title="Max number of multiplexed streams (mux-max-stream)"
             app:useSimpleSummaryProvider="true" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory app:title="Geek's settings">
         <androidx.preference.EditTextPreference
-            app:key="buffSize"
-            app:persistent="false"
-            app:title="IO buffer size (buff)"
-            app:useSimpleSummaryProvider="true" />
-
-        <androidx.preference.CheckBoxPreference
-            app:key="noDelay"
-            app:persistent="false"
-            app:title="Enable TCP no delay"
-            app:summary="no-delay"/>
-
-        <androidx.preference.EditTextPreference
-            app:key="mss"
-            app:persistent="false"
-            app:title="TCP maximum segment size (mss)"
-            app:useSimpleSummaryProvider="true" />
-
-        <androidx.preference.EditTextPreference
-            app:key="idleTimeout"
+            app:key="timeout"
             app:persistent="false"
             app:title="Idle Timeout (timeout)"
             app:useSimpleSummaryProvider="true" />
@@ -63,7 +45,7 @@
 
     <androidx.preference.PreferenceCategory app:title="Debug only">
         <androidx.preference.EditTextPreference
-            app:key="fallbackDNS"
+            app:key="fallback-dns"
             app:persistent="false"
             app:title="Fallback DNS server (fallback-dns)"
             app:useSimpleSummaryProvider="true" />

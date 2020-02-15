@@ -31,64 +31,52 @@ import kotlin.collections.set
 
 class ConfigFragment : GeneralConfigFragment() {
     //required
-    private val serverName by lazy { findPreference<EditTextPreference>("serverName")!! }
-
-    //optional
-    private val wssMode by lazy { findPreference<CheckBoxPreference>("wssMode")!! }
-    private val path by lazy { findPreference<EditTextPreference>("path")!! }
-    private val insecureSkipVerify by lazy { findPreference<CheckBoxPreference>("insecureSkipVerify")!! }
+    private val n by lazy { findPreference<EditTextPreference>("n")!! }
+    private val wss by lazy { findPreference<CheckBoxPreference>("wss")!! }
+    private val wssPath by lazy { findPreference<EditTextPreference>("wss-path")!! }
+    private val sv by lazy { findPreference<CheckBoxPreference>("sv")!! }
     private val mux by lazy { findPreference<CheckBoxPreference>("mux")!! }
-    private val maxStream by lazy { findPreference<EditTextPreference>("maxStream")!! }
+    private val muxMaxStream by lazy { findPreference<EditTextPreference>("mux-max-stream")!! }
 
     //geek's
-    private val buffSize by lazy { findPreference<EditTextPreference>("buffSize")!! }
-    private val noDelay by lazy { findPreference<CheckBoxPreference>("noDelay")!! }
-    private val mss by lazy { findPreference<EditTextPreference>("mss")!! }
-    private val idleTimeout by lazy { findPreference<EditTextPreference>("idleTimeout")!! }
+    private val timeout by lazy { findPreference<EditTextPreference>("timeout")!! }
 
 
     //debug
     private val receivedStr by lazy { findPreference<Preference>("receivedStr")!! }
-    private val fallbackDNS by lazy { findPreference<EditTextPreference>("fallbackDNS")!! }
+    private val fallbackDNS by lazy { findPreference<EditTextPreference>("fallback-dns")!! }
     private val verbose by lazy { findPreference<CheckBoxPreference>("verbose")!! }
 
 
     override val options
         get() = PluginOptions().apply {
             this.id = "mostlstunnel"
-            if (serverName.text.isNotBlank()) this["n"] = serverName.text
+            if (n.text.isNotBlank()) this["n"] = n.text
 
-            if (wssMode.isChecked) this["wss"] = null
-            if (path.text.isNotBlank()) this["path"] = path.text
-            if (insecureSkipVerify.isChecked) this["sv"] = null
+            if (wss.isChecked) this["wss"] = null
+            if (wssPath.text.isNotBlank()) this["wss-path"] = wssPath.text
+            if (sv.isChecked) this["sv"] = null
             if (mux.isChecked) this["mux"] = null
-            if (maxStream.text.isNotBlank()) this["max-stream"] = maxStream.text
+            if (muxMaxStream.text.isNotBlank()) this["mux-max-stream"] = muxMaxStream.text
 
-            if (buffSize.text.isNotBlank()) this["buff"] = buffSize.text
-            if (noDelay.isChecked) this["no-delay"] = null
-            if (mss.text.isNotBlank()) this["mss"] = mss.text
-
-            if (idleTimeout.text.isNotBlank()) this["timeout"] = idleTimeout.text
+            if (timeout.text.isNotBlank()) this["timeout"] = timeout.text
 
             if (fallbackDNS.text.isNotBlank()) this["fallback-dns"] = fallbackDNS.text
             if (verbose.isChecked) this["verbose"] = null
         }
 
     override fun onInitializePluginOptions(options: PluginOptions) {
-        serverName.text = options["n"] ?: ""
+        n.text = options["n"] ?: ""
 
-        wssMode.isChecked = options.containsKey("wss")
-        path.isEnabled = wssMode.isChecked
-        path.text = options["path"] ?: ""
-        insecureSkipVerify.isChecked = options.containsKey("sv")
+        wss.isChecked = options.containsKey("wss")
+        wssPath.isEnabled = wss.isChecked
+        wssPath.text = options["wss-path"] ?: ""
+        sv.isChecked = options.containsKey("sv")
         mux.isChecked = options.containsKey("mux")
-        maxStream.isEnabled = mux.isChecked
-        maxStream.text = options["max-stream"] ?: ""
+        muxMaxStream.isEnabled = mux.isChecked
+        muxMaxStream.text = options["mux-max-stream"] ?: ""
 
-        buffSize.text = options["buff"] ?: ""
-        noDelay.isChecked = options.containsKey("no-delay")
-        mss.text = options["mss"] ?: ""
-        idleTimeout.text = options["timeout"] ?: ""
+        timeout.text = options["timeout"] ?: ""
 
         fallbackDNS.text = options["fallback-dns"] ?: ""
         verbose.isChecked = options.containsKey("verbose")
@@ -97,22 +85,20 @@ class ConfigFragment : GeneralConfigFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.tls_tunnel_settings)
-        serverName.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
+        n.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
 
-        wssMode.setOnPreferenceChangeListener { _, newValue ->
-            path.isEnabled = newValue as Boolean
+        wss.setOnPreferenceChangeListener { _, newValue ->
+            wssPath.isEnabled = newValue as Boolean
             return@setOnPreferenceChangeListener true
         }
 
-        path.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
+        wssPath.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
         mux.setOnPreferenceChangeListener { _, newValue ->
-            maxStream.isEnabled = newValue as Boolean
+            muxMaxStream.isEnabled = newValue as Boolean
             return@setOnPreferenceChangeListener true
         }
-        maxStream.setOnBindEditTextListener { it.inputType = InputType.TYPE_CLASS_NUMBER }
-
-        buffSize.setOnBindEditTextListener { it.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL }
-        idleTimeout.setOnBindEditTextListener { it.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL }
+        muxMaxStream.setOnBindEditTextListener { it.inputType = InputType.TYPE_CLASS_NUMBER }
+        timeout.setOnBindEditTextListener { it.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL }
 
         fallbackDNS.setOnBindEditTextListener { it.inputType = InputType.TYPE_TEXT_VARIATION_URI }
     }

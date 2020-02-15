@@ -2,5 +2,5 @@
     <string name="app_name">Mos tunnel</string>
     <string name="mostlstunnel_plugin_id">mostlstunnel</string>
     <string name="mostlstunnel_path_plugin_id">/mostlstunnel</string>
-    <string name="mostlstunnel_lib_file_name">libmos-tls-tunnel.so</string>
+    <string name="mostlstunnel_lib_file_name">libmtt-client.so</string>
 </resources>
